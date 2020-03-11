@@ -1,6 +1,6 @@
-package kitchenpos.menus.controller;
+package kitchenpos.menus.api;
 
-import kitchenpos.menus.bo.MenuGroupBo;
+import kitchenpos.menus.application.MenuGroupService;
 import kitchenpos.menus.model.MenuGroup;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +30,12 @@ class MenuGroupRestControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private MenuGroupBo menuGroupBo;
+    private MenuGroupService menuGroupService;
 
     @Test
     void create() throws Exception {
         // given
-        given(menuGroupBo.create(any(MenuGroup.class))).willReturn(twoChickens());
+        given(menuGroupService.create(any(MenuGroup.class))).willReturn(twoChickens());
 
         // when
         final ResultActions resultActions = mockMvc.perform(post("/api/menu-groups")
@@ -55,7 +55,7 @@ class MenuGroupRestControllerTest {
     @Test
     void list() throws Exception {
         // given
-        given(menuGroupBo.list()).willReturn(Arrays.asList(twoChickens()));
+        given(menuGroupService.list()).willReturn(Arrays.asList(twoChickens()));
 
         // when
         final ResultActions resultActions = mockMvc.perform(get("/api/menu-groups"));

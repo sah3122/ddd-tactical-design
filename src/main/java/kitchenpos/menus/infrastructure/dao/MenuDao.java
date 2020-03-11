@@ -1,4 +1,4 @@
-package kitchenpos.menus.dao;
+package kitchenpos.menus.infrastructure.dao;
 
 import kitchenpos.menus.model.Menu;
 

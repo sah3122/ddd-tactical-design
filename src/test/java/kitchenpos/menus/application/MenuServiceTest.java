@@ -1,8 +1,8 @@
-package kitchenpos.menus.bo;
+package kitchenpos.menus.application;
 
-import kitchenpos.menus.dao.MenuDao;
-import kitchenpos.menus.dao.MenuGroupDao;
-import kitchenpos.menus.dao.MenuProductDao;
+import kitchenpos.menus.infrastructure.dao.MenuDao;
+import kitchenpos.menus.infrastructure.dao.MenuGroupDao;
+import kitchenpos.menus.infrastructure.dao.MenuProductDao;
 import kitchenpos.menus.model.Menu;
 import kitchenpos.products.application.InMemoryProductDao;
 import kitchenpos.products.infrastructure.dao.ProductDao;
@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class MenuBoTest {
+class MenuServiceTest {
     public static final Long FRIED_CHICKEN_ID = 1L;
 
     private final MenuDao menuDao = new InMemoryMenuDao();
@@ -32,11 +32,11 @@ class MenuBoTest {
     private final MenuProductDao menuProductDao = new InMemoryMenuProductDao();
     private final ProductDao productDao = new InMemoryProductDao();
 
-    private MenuBo menuBo;
+    private MenuService menuService;
 
     @BeforeEach
     void setUp() {
-        menuBo = new MenuBo(menuDao, menuGroupDao, menuProductDao, productDao);
+        menuService = new MenuService(menuDao, menuGroupDao, menuProductDao, productDao);
 
         Product product = new Product();
         product.setId(FRIED_CHICKEN_ID);
@@ -54,7 +54,7 @@ class MenuBoTest {
         final Menu expected = twoFriedChickens();
 
         // when
-        final Menu actual = menuBo.create(expected);
+        final Menu actual = menuService.create(expected);
 
         // then
         assertMenu(expected, actual);
@@ -71,7 +71,7 @@ class MenuBoTest {
 
         // when
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> menuBo.create(expected));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> menuService.create(expected));
     }
 
     @DisplayName("메뉴는 특정 메뉴 그룹에 속해야 한다.")
@@ -84,7 +84,7 @@ class MenuBoTest {
 
         // when
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> menuBo.create(expected));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> menuService.create(expected));
     }
 
     @DisplayName("메뉴의 목록을 조회할 수 있다.")
@@ -94,7 +94,7 @@ class MenuBoTest {
         final Menu twoFriedChickens = menuDao.save(twoFriedChickens());
 
         // when
-        final List<Menu> actual = menuBo.list();
+        final List<Menu> actual = menuService.list();
 
         // then
         assertThat(actual).containsExactlyInAnyOrderElementsOf(Arrays.asList(twoFriedChickens));

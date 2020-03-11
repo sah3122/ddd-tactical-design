@@ -1,6 +1,6 @@
-package kitchenpos.menus.bo;
+package kitchenpos.menus.application;
 
-import kitchenpos.menus.dao.MenuGroupDao;
+import kitchenpos.menus.infrastructure.dao.MenuGroupDao;
 import kitchenpos.menus.model.MenuGroup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,14 +13,14 @@ import static kitchenpos.menus.Fixtures.twoChickens;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class MenuGroupBoTest {
+class MenuGroupServiceTest {
     private final MenuGroupDao menuGroupDao = new InMemoryMenuGroupDao();
 
-    private MenuGroupBo menuGroupBo;
+    private MenuGroupService menuGroupService;
 
     @BeforeEach
     void setUp() {
-        menuGroupBo = new MenuGroupBo(menuGroupDao);
+        menuGroupService = new MenuGroupService(menuGroupDao);
     }
 
     @DisplayName("메뉴 그룹을 등록할 수 있다.")
@@ -30,7 +30,7 @@ class MenuGroupBoTest {
         final MenuGroup expected = twoChickens();
 
         // when
-        final MenuGroup actual = menuGroupBo.create(expected);
+        final MenuGroup actual = menuGroupService.create(expected);
 
         // then
         assertMenuGroup(expected, actual);
@@ -43,7 +43,7 @@ class MenuGroupBoTest {
         final MenuGroup twoChickens = menuGroupDao.save(twoChickens());
 
         // when
-        final List<MenuGroup> actual = menuGroupBo.list();
+        final List<MenuGroup> actual = menuGroupService.list();
 
         // then
         assertThat(actual).containsExactlyInAnyOrderElementsOf(Arrays.asList(twoChickens));

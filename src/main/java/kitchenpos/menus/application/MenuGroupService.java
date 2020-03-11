@@ -1,6 +1,6 @@
-package kitchenpos.menus.bo;
+package kitchenpos.menus.application;
 
-import kitchenpos.menus.dao.MenuGroupDao;
+import kitchenpos.menus.infrastructure.dao.MenuGroupDao;
 import kitchenpos.menus.model.MenuGroup;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Component
-public class MenuGroupBo {
+public class MenuGroupService {
     private final MenuGroupDao menuGroupDao;
 
-    public MenuGroupBo(final MenuGroupDao menuGroupDao) {
+    public MenuGroupService(final MenuGroupDao menuGroupDao) {
         this.menuGroupDao = menuGroupDao;
     }
 

@@ -14,7 +14,8 @@ public class Product {
     private String name;
 
     @Embedded
-    private ProductPrice price;
+    @Column(name = "price")
+    private ProductPrice productPrice;
 
     protected Product() {
     }
@@ -23,7 +24,7 @@ public class Product {
         validProductName(name);
 
         this.name = name;
-        this.price = new ProductPrice(price);
+        this.productPrice = new ProductPrice(price);
     }
 
     public Long getId() {
@@ -35,11 +36,11 @@ public class Product {
     }
 
     public BigDecimal getPrice() {
-        return price.getPrice();
+        return productPrice.getPrice();
     }
 
     public void changeProductPrice(final BigDecimal price) {
-        this.price = new ProductPrice(price);
+        this.productPrice = new ProductPrice(price);
     }
 
     private void validProductName(String name) {
@@ -58,6 +59,6 @@ public class Product {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price);
+        return Objects.hash(id, name, productPrice);
     }
 }
