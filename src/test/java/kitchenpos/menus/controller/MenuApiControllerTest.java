@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(MenuRestController.class)
 @Import(HttpEncodingAutoConfiguration.class)
-class MenuRestControllerTest {
+class MenuApiControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
